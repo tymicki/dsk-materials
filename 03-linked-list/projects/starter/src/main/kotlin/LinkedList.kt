@@ -1,9 +1,10 @@
-class LinkedList<T : Any> {
+class LinkedList<T : Any> : Iterable<T>, Collection<T>, MutableIterable<T>, MutableCollection<T> {
     private var head: Node<T>? = null
     private var tail: Node<T>? = null
-    private var size = 0
+    override var size = 0
+        private set
 
-    fun isEmpty(): Boolean = size == 0
+    override fun isEmpty(): Boolean = size == 0
     override fun toString(): String {
         if (isEmpty()) {
             return "Empty list"
@@ -91,5 +92,130 @@ class LinkedList<T : Any> {
         prev.next = null
         tail = prev
         return current.value
+    }
+
+    fun removeAfter(node: Node<T>): T? {
+        val result = node.next?.value
+        if (node.next == tail) {
+            tail = node
+        }
+        if (node.next != null) {
+            size--
+        }
+        node.next = node.next?.next
+        return result
+    }
+
+    override fun iterator(): MutableIterator<T> {
+        return LinkedListIterator(this)
+    }
+
+
+    class LinkedListIterator<T : Any>(
+        private val list: LinkedList<T>
+    ) : Iterator<T>, MutableIterator<T> {
+        private var index = 0
+        private var lastNode: Node<T>? = null
+
+        override fun next(): T {
+            // 1
+            if (index >= list.size) throw IndexOutOfBoundsException()
+            // 2
+            lastNode = if (index == 0) {
+                list.nodeAt(0)
+            } else {
+                lastNode?.next
+            }
+            // 3
+            index++
+            return lastNode!!.value
+        }
+
+        override fun hasNext(): Boolean {
+            return index < list.size
+        }
+
+        override fun remove() {
+            // 1
+            if (index == 1) {
+                list.pop()
+            } else {
+                // 2
+                val prevNode = list.nodeAt(index - 2) ?: return
+                // 3
+                list.removeAfter(prevNode)
+                lastNode = prevNode
+            }
+            index--
+        }
+    }
+
+    override fun contains(element: T): Boolean {
+        for (item in this) {
+            if (item == element) return true
+        }
+        return false
+    }
+
+    override fun containsAll(elements: Collection<T>): Boolean {
+        for (searched in elements) {
+            if (!contains(searched)) return false
+        }
+        return true
+    }
+
+    override fun add(element: T): Boolean {
+        append(element)
+        return true
+    }
+
+    override fun addAll(elements: Collection<T>): Boolean {
+        for (element in elements) {
+            append(element)
+        }
+        return true
+    }
+
+    override fun clear() {
+        head = null
+        tail = null
+        size = 0
+    }
+
+    override fun remove(element: T): Boolean {
+        // 1
+        val iterator = iterator()
+        // 2
+        while (iterator.hasNext()) {
+            val item = iterator.next()
+            // 3
+            if (item == element) {
+                iterator.remove()
+                return true
+            }
+        }
+        // 4
+        return false
+    }
+
+    override fun removeAll(elements: Collection<T>): Boolean {
+        var result = false
+        for (item in elements) {
+            result = remove(item) || result
+        }
+        return result
+    }
+
+    override fun retainAll(elements: Collection<T>): Boolean {
+        var result = false
+        val iterator = this.iterator()
+        while (iterator.hasNext()) {
+            val item = iterator.next()
+            if (!elements.contains(item)) {
+                iterator.remove()
+                result = true
+            }
+        }
+        return result
     }
 }
