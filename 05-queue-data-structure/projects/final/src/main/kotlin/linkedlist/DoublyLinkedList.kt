@@ -32,74 +32,74 @@ package linkedlist
 
 class DoublyLinkedList<T : Any> {
 
-  fun isEmpty(): Boolean {
-    return head == null
-  }
-
-  private var head: Node<T>? = null
-  private var tail: Node<T>? = null
-
-
-  override fun toString(): String {
-    if (isEmpty()) {
-      return "Empty list"
-    }
-    return head.toString()
-  }
-
-
-  fun append(value: T) {
-
-    val newNode = Node(value = value, previous = tail)
-    if (isEmpty()) {
-      head = newNode
-      tail = newNode
-      return
+    fun isEmpty(): Boolean {
+        return head == null
     }
 
-    tail?.next = newNode
+    private var head: Node<T>? = null
+    private var tail: Node<T>? = null
 
-    tail = newNode
-  }
 
-  fun node(index: Int): Node<T>? {
-    // 1
-    var currentNode = head
-    var currentIndex = 0
-
-    // 2
-    while (currentNode != null && currentIndex < index) {
-      currentNode = currentNode.next
-      currentIndex += 1
+    override fun toString(): String {
+        if (isEmpty()) {
+            return "Empty list"
+        }
+        return head.toString()
     }
 
-    return currentNode
-  }
 
-  fun remove(node: Node<T>): T {
+    fun append(value: T) {
 
-    val prev = node.previous
-    val next = node.next
+        val newNode = Node(value = value, previous = tail)
+        if (isEmpty()) {
+            head = newNode
+            tail = newNode
+            return
+        }
 
-    if (prev != null) {
-      prev.next = node.previous
-    } else {
-      head = next
+        tail?.next = newNode
+
+        tail = newNode
     }
 
-    next?.previous = prev
+    fun node(index: Int): Node<T>? {
+        // 1
+        var currentNode = head
+        var currentIndex = 0
 
-    if (next == null) {
-      tail = prev
+        // 2
+        while (currentNode != null && currentIndex < index) {
+            currentNode = currentNode.next
+            currentIndex += 1
+        }
+
+        return currentNode
     }
 
-    node.previous = null
-    node.next = null
+    fun remove(node: Node<T>): T {
 
-    return node.value
-  }
+        val prev = node.previous
+        val next = node.next
 
-  val first: Node<T>?
-    get() = head
+        if (prev != null) {
+            prev.next = node.previous
+        } else {
+            head = next
+        }
+
+        next?.previous = prev
+
+        if (next == null) {
+            tail = prev
+        }
+
+        node.previous = null
+        node.next = null
+
+        return node.value
+    }
+
+    val first: Node<T>?
+        get() = head
 
 }

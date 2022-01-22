@@ -32,15 +32,15 @@ package base
 
 interface Queue<T : Any> {
 
-  fun enqueue(element: T): Boolean
+    fun enqueue(element: T): Boolean
 
-  fun dequeue(): T?
+    fun dequeue(): T?
 
-  val count: Int
-    get
+    val count: Int
+        get
 
-  val isEmpty: Boolean
-    get() = count == 0
+    val isEmpty: Boolean
+        get() = count == 0
 
-  fun peek(): T?
+    fun peek(): T?
 }
