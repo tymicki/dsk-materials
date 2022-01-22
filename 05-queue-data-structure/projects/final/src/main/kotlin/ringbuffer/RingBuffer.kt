@@ -45,13 +45,13 @@ class RingBuffer<T : Any>(private val size: Int) {
     val first: T?
         get() = array.getOrNull(readIndex)
 
-    val isEmpty: Boolean
+    private val isEmpty: Boolean
         get() = (count == 0)
 
     private val availableSpaceForWriting: Int
         get() = (size - availableSpaceForReading)
 
-    val isFull: Boolean
+    private val isFull: Boolean
         get() = (availableSpaceForWriting == 0)
 
     fun write(element: T): Boolean {
