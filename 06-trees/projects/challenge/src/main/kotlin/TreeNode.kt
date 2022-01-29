@@ -30,30 +30,42 @@ import list.ArrayListQueue
  * THE SOFTWARE.
  */
 
-class TreeNode<T>(val value: T) {
-  private val children: MutableList<TreeNode<T>> = mutableListOf()
+class TreeNode<T>(private val value: T) {
+    private val children: MutableList<TreeNode<T>> = mutableListOf()
 
-  fun add(child: TreeNode<T>) = children.add(child)
+    fun add(child: TreeNode<T>) = children.add(child)
 
-  // solution
-  fun printEachLevel() {
-    val queue = ArrayListQueue<TreeNode<T>>()
-    var nodesLeftInCurrentLevel = 0
+    // solution
+    fun printEachLevel() {
+        // 1 You begin by initializing a Queue data structure to facilitate the level-order
+        //traversal. You also create nodesLeftInCurrentLevel to keep track of the
+        //number of nodes you’ll need to work on before you print a new line.
+        val queue = ArrayListQueue<TreeNode<T>>()
+        var nodesLeftInCurrentLevel = 0
 
-    queue.enqueue(this)
-    while (queue.isEmpty.not()) {
-      nodesLeftInCurrentLevel = queue.count
+        queue.enqueue(this)
+        //2. Your level-order traversal continues until your queue is empty.
+        while (queue.isEmpty.not()) {
+            //3. Inside the first while loop, you begin by setting nodesLeftInCurrentLevel to
+            //the current elements in the queue.
+            nodesLeftInCurrentLevel = queue.count
 
-      while (nodesLeftInCurrentLevel > 0) {
-        val node = queue.dequeue()
-        node?.let {
-          print("${node.value} ")
-          node.children.forEach { queue.enqueue(it) }
-          nodesLeftInCurrentLevel--
-        } ?: break
-      }
+            //4. Using another while loop, you dequeue the first nodesLeftInCurrentLevel
+            //number of elements from the queue. Every element you dequeue is printed
+            //without establishing a new line. You also enqueue all the children of the node.
+            while (nodesLeftInCurrentLevel > 0) {
+                val node = queue.dequeue()
+                node?.let {
+                    print("${node.value} ")
+                    node.children.forEach { queue.enqueue(it) }
+                    nodesLeftInCurrentLevel--
+                } ?: break
+            }
 
-      println()
+            //5. At this point, you generate the new line using println(). In the next iteration,
+            //nodesLeftInCurrentLevel is updated with the count of the queue, representing
+            //the number of children from the previous iteration.
+            println()
+        }
     }
-  }
 }

@@ -31,20 +31,20 @@
 fun main() {
   val tree = makeBeverageTree()
 
-  //tree.forEachDepthFirst { println(it.value) }
-  //tree.forEachLevelOrder { println(it.value) }
+//  tree.forEachDepthFirst { println(it.value) }
+  tree.forEachLevelOrder { println(it.value) }
 
   tree.search("ginger ale")?.let {
     println("Found node: ${it.value}")
   }
-
-  tree.search("WKD Blue")?.let {
-    println(it.value)
-  } ?: println("Couldn't find WKD Blue")
+//
+//  tree.search("WKD Blue")?.let {
+//    println(it.value)
+//  } ?: println("Couldn't find WKD Blue")
 }
 
 fun makeBeverageTree(): TreeNode<String> {
-  val tree = TreeNode("Beverages")
+  val tree = TreeNode("beverages")
 
   val hot = TreeNode("hot")
   val cold = TreeNode("cold")
