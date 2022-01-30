@@ -42,14 +42,12 @@ class TreeNode<T>(private val value: T) {
         //number of nodes you’ll need to work on before you print a new line.
         val queue = ArrayListQueue<TreeNode<T>>()
         var nodesLeftInCurrentLevel = 0
-
         queue.enqueue(this)
         //2. Your level-order traversal continues until your queue is empty.
         while (queue.isEmpty.not()) {
             //3. Inside the first while loop, you begin by setting nodesLeftInCurrentLevel to
             //the current elements in the queue.
             nodesLeftInCurrentLevel = queue.count
-
             //4. Using another while loop, you dequeue the first nodesLeftInCurrentLevel
             //number of elements from the queue. Every element you dequeue is printed
             //without establishing a new line. You also enqueue all the children of the node.
@@ -61,7 +59,6 @@ class TreeNode<T>(private val value: T) {
                     nodesLeftInCurrentLevel--
                 } ?: break
             }
-
             //5. At this point, you generate the new line using println(). In the next iteration,
             //nodesLeftInCurrentLevel is updated with the count of the queue, representing
             //the number of children from the previous iteration.
