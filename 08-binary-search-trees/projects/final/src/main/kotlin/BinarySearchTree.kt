@@ -60,7 +60,6 @@ class BinarySearchTree<T : Comparable<T>> {
         value: T
     ): BinaryNode<T>? {
         node ?: return null
-
         when {
             value == node.value -> {
                 // 1
@@ -90,25 +89,25 @@ class BinarySearchTree<T : Comparable<T>> {
 
     override fun toString() = root?.toString() ?: "empty tree"
 
-  fun contains(value: T): Boolean {
-    // 1
-    var current = root
+    fun contains(value: T): Boolean {
+        // 1
+        var current = root
 
-    // 2
-    while (current != null) {
-      // 3
-      if (current.value == value) {
-        return true
-      }
+        // 2
+        while (current != null) {
+            // 3
+            if (current.value == value) {
+                return true
+            }
 
-      // 4
-      current = if (value < current.value) {
-        current.leftChild
-      } else {
-        current.rightChild
-      }
+            // 4
+            current = if (value < current.value) {
+                current.leftChild
+            } else {
+                current.rightChild
+            }
+        }
+
+        return false
     }
-
-    return false
-  }
 }
