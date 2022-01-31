@@ -30,65 +30,65 @@
 
 class BinarySearchTree<T : Comparable<T>> {
 
-  var root: BinaryNode<T>? = null
+    var root: BinaryNode<T>? = null
 
-  fun insert(value: T) {
-    root = insert(root, value)
-  }
-
-  private fun insert(
-    node: BinaryNode<T>?,
-    value: T
-  ): BinaryNode<T> {
-    node ?: return BinaryNode(value)
-
-    if (value < node.value) {
-      node.leftChild = insert(node.leftChild, value)
-    } else {
-      node.rightChild = insert(node.rightChild, value)
+    fun insert(value: T) {
+        root = insert(root, value)
     }
 
-    return node
-  }
+    private fun insert(
+        node: BinaryNode<T>?,
+        value: T
+    ): BinaryNode<T> {
+        node ?: return BinaryNode(value)
 
-  fun remove(value: T) {
-    root = remove(root, value)
-  }
-
-  private fun remove(
-    node: BinaryNode<T>?,
-    value: T
-  ): BinaryNode<T>? {
-    node ?: return null
-
-    when {
-      value == node.value -> {
-        // 1
-        if (node.leftChild == null && node.rightChild == null) {
-          return null
-        }
-        // 2
-        if (node.leftChild == null) {
-          return node.rightChild
-        }
-        // 3
-        if (node.rightChild == null) {
-          return node.leftChild
-        }
-        // 4
-        node.rightChild?.min?.value?.let {
-          node.value = it
+        if (value < node.value) {
+            node.leftChild = insert(node.leftChild, value)
+        } else {
+            node.rightChild = insert(node.rightChild, value)
         }
 
-        node.rightChild = remove(node.rightChild, node.value)
-      }
-      value < node.value -> node.leftChild = remove(node.leftChild, value)
-      else -> node.rightChild = remove(node.rightChild, value)
+        return node
     }
-    return node
-  }
 
-  override fun toString() = root?.toString() ?: "empty tree"
+    fun remove(value: T) {
+        root = remove(root, value)
+    }
+
+    private fun remove(
+        node: BinaryNode<T>?,
+        value: T
+    ): BinaryNode<T>? {
+        node ?: return null
+
+        when {
+            value == node.value -> {
+                // 1
+                if (node.leftChild == null && node.rightChild == null) {
+                    return null
+                }
+                // 2
+                if (node.leftChild == null) {
+                    return node.rightChild
+                }
+                // 3
+                if (node.rightChild == null) {
+                    return node.leftChild
+                }
+                // 4
+                node.rightChild?.min?.value?.let {
+                    node.value = it
+                }
+
+                node.rightChild = remove(node.rightChild, node.value)
+            }
+            value < node.value -> node.leftChild = remove(node.leftChild, value)
+            else -> node.rightChild = remove(node.rightChild, value)
+        }
+        return node
+    }
+
+    override fun toString() = root?.toString() ?: "empty tree"
 
   fun contains(value: T): Boolean {
     // 1
@@ -111,5 +111,4 @@ class BinarySearchTree<T : Comparable<T>> {
 
     return false
   }
-
 }

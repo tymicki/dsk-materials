@@ -84,10 +84,10 @@ class BinaryNode<T: Any>(var value: T) {
     return list
   }
 
-  fun deserialize(list: MutableList<T?>): BinaryNode<T>? {
+  private fun deserialize(list: MutableList<T?>): BinaryNode<T>? {
     val rootValue = list.removeAt(list.size - 1) ?: return null
 
-    val root = BinaryNode<T>(rootValue)
+    val root = BinaryNode(rootValue)
 
     root.leftChild = deserialize(list)
     root.rightChild = deserialize(list)
@@ -99,7 +99,7 @@ class BinaryNode<T: Any>(var value: T) {
     return deserialize(list.asReversed())
   }
 
-  fun traversePreOrderWithNull(visit: (T?) -> Unit) {
+  private fun traversePreOrderWithNull(visit: (T?) -> Unit) {
     visit(value)
     leftChild?.traversePreOrderWithNull(visit) ?: visit(null)
     rightChild?.traversePreOrderWithNull(visit) ?: visit(null)
