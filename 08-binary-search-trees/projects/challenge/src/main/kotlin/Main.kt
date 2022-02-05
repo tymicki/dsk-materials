@@ -46,8 +46,10 @@ val exampleTree2 = BinarySearchTree<Int>().apply {
 }
 
 fun main() {
+  println(exampleTree)
   println(exampleTree.root?.isBinarySearchTree)
-  
+  println(exampleTree2)
+  println(exampleTree2.root?.isBinarySearchTree)
   println(exampleTree == exampleTree2)
   println(exampleTree.contains(exampleTree2))
 }
